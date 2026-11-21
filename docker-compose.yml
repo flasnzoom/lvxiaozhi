@@ -1,0 +1,42 @@
+services:
+  api:
+    build: .
+    image: lvxiaozhi-api:local
+    command: ["python", "-m", "uvicorn", "api.api_server:app", "--host", "0.0.0.0", "--port", "8000"]
+    env_file: .env            # 密钥运行时注入，不进镜像
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status==200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s       # 图 + MCP 子进程初始化要时间
+    restart: unless-stopped
+
+  front:
+    image: lvxiaozhi-api:local
+    command:
+      - python
+      - -m
+      - streamlit
+      - run
+      - front/streamlit_app.py
+      - --server.port=8501
+      - --server.address=0.0.0.0
+      - --server.headless=true
+    env_file: .env
+    environment:
+      API_BASE_URL: http://api:8000      # 容器内走服务名，不是 127.0.0.1
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy        # 等 /health 通过再起前端
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3).status==200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped

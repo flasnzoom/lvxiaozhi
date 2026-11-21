@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+
+.git
+.gitignore
+.idea
+
+_backup
+__pycache__
+*.pyc
+.pytest_cache
+.venv
+
+PROGRESS.md
+test_mcp_client.py
+*.log

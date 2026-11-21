@@ -1,0 +1,15 @@
+langgraph==0.3.29
+langchain-core==0.3.51
+langchain-openai==0.3.12
+langchain-mcp-adapters==0.1.9
+mcp==1.15.0
+fastapi==0.115.12
+uvicorn==0.34.0
+streamlit==1.67.0
+httpx==0.28.1
+pydantic==2.11.10
+python-dotenv==1.1.0
+pypinyin==0.55.0
+requests==2.32.3
+
+

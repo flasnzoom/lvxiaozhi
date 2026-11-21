@@ -1,0 +1,35 @@
+
+.env
+.env.*
+!.env.example
+
+# ===== 备份目录（含旧代码副本）=====
+_backup/
+
+# ===== IDE / 系统 =====
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+build/
+dist/
+
+PROGRESS.md
+_HISTORY/
+notes/
+
+# ===== 运行产物 =====
+*.log
+*.tmp
+.DS_Store
+
+# ===== 本地实验（可选保留）=====
+# tmp_*.py
